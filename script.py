@@ -1,4 +1,7 @@
+#export SPOTIFYTOKEN={spotify web api}, SPOTIFYID in os, add users to google youtube api;
+
 import os
+import json
 import requests
 import youtube_dl
 import urllib.parse
@@ -66,6 +69,14 @@ class SpotifyClientAccess(object):
     def __init__(self, token):
         self.token = token
 
+    def createPlaylist(self):
+        request = json.dumps({"name": "Youtube Music", "description": "Music imported from Youtube", "public": True})
+        get = f"https://api.spotify.com/v1/users/{os.getenv('SPOTIFYID')}/playlists"
+        response = requests.post(get, data = request, headers = {"Content-Type":  "application/json", "Authorization": f"Bearer {self.token}"})
+        playlistJSON = response.json()
+
+        return playlistJSON["id"]
+
     def searchMusic(self, artist, track):
         request = urllib.parse.quote(f"{artist} {track}")
         url = f"https://api.spotify.com/v1/search?q={request}&type=track"
@@ -76,9 +87,10 @@ class SpotifyClientAccess(object):
         if music:
             return music[0]["id"]
 
-    def addMusic(self, id):
-        url = "https://api.spotify.com/v1/me/tracks"
-        response = requests.put(url, json = {"ids": [id]},  headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.token}"})
+    def addMusic(self, create, uri):
+        id = "".join(uri)
+        url = f"https://api.spotify.com/v1/playlists/{create}/tracks?uris={id}"
+        response = requests.put(url, headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.token}"})
         
         return response.ok
 
@@ -97,12 +109,16 @@ def main():
     songs = youtubeClient.getPlaylistMusic(selectedPlaylist.id)
     print(f"searching for songs in {selectedPlaylist.title}...")
 
+    uri = []
+    create = spotifyClient.createPlaylist()
     for song in songs:
         spotifyId = spotifyClient.searchMusic(song.artist, song.track)
         if spotifyId:
-            addedMusic = spotifyClient.addMusic(spotifyId)
-            if addedMusic:
-                print(f"adding {song.track}...")
+            uri = uri + ["spotify%3Atrack%3A"+spotifyId+"%2C"]
+
+    uri[-1] = uri[-1][:-3]
+    print(f"adding songs to playlist...")
+    spotifyClient.addMusic(create, uri)
     print("success!")
 
 main()
