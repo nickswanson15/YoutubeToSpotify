@@ -1,4 +1,4 @@
-#export SPOTIFYTOKEN={spotify web api}, SPOTIFYID in os, add users to google youtube api;
+#export SPOTIFYTOKEN={spotify web api}, SPOTIFYID in os;
 
 import os
 import json
