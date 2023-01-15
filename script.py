@@ -1,4 +1,4 @@
-#export SPOTIFYTOKEN={spotify web api}, SPOTIFYID in os;
+#export SPOTIFYTOKEN={spotify web api(spotify console->create playlist)}, export SPOTIFYID={spotify username};
 
 import os
 import json
@@ -74,7 +74,6 @@ class SpotifyClientAccess(object):
         get = f"https://api.spotify.com/v1/users/{os.getenv('SPOTIFYID')}/playlists"
         response = requests.post(get, data = request, headers = {"Content-Type":  "application/json", "Authorization": f"Bearer {self.token}"})
         playlistJSON = response.json()
-
         return playlistJSON["id"]
 
     def searchMusic(self, artist, track):
