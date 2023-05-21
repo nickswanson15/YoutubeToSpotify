@@ -1,4 +1,4 @@
-#export SPOTIFYTOKEN={access token from auth)}, export SPOTIFYID={spotify username};
+#export SPOTIFYTOKEN={access token from auth}, export SPOTIFYID={spotify username}
 
 import os
 import json
