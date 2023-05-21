@@ -74,7 +74,6 @@ class SpotifyClientAccess(object):
         get = f"https://api.spotify.com/v1/users/{os.getenv('SPOTIFYID')}/playlists"
         response = requests.post(get, data = request, headers = {"Content-Type":  "application/json", "Authorization": f"Bearer {self.token}"})
         playlistJSON = response.json()
-        print(playlistJSON)
         return playlistJSON["id"]
 
     def searchMusic(self, artist, track):

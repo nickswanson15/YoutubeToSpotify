@@ -1,0 +1,23 @@
+{
+  "name": "youtubetospotifyautomation",
+  "version": "1.0.0",
+  "description": "Python script that automates the process of transferring Youtube playlists to Spotify playlists.",
+  "main": "auth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickswanson15/YoutubeToSpotifyAutomation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nickswanson15/YoutubeToSpotifyAutomation/issues"
+  },
+  "homepage": "https://github.com/nickswanson15/YoutubeToSpotifyAutomation#readme",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
